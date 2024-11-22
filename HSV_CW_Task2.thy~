@@ -1,0 +1,37 @@
+theory HSV_CW_Task2 imports Main begin
+
+section \<open> Task 2: Converting numbers to lists of digits. \<close>
+
+text \<open> Turns a natural number into a list of digits in reverse order. \<close>
+fun digits10 :: "nat \<Rightarrow> nat list"
+where
+  "digits10 n = (if n < 10 then [n] else (n mod 10) # digits10 (n div 10))"
+
+value "digits10 42"
+
+
+text \<open> Every digit is less than 10 (helper lemma). \<close>
+lemma digits10_all_below_10_helper: 
+  "ds = digits10 n \<Longrightarrow> \<forall>d \<in> set ds. d < 10"
+proof(induct ds)
+  case Nil
+  then show ?case
+    by simp
+next
+  case (Cons a ds)
+  {
+    obtain a
+      where "ds = digits10 n \<Longrightarrow> a \<in> set ds"
+    hence "a<10"
+  }
+  then show ?case sorry
+qed
+
+
+text \<open> Every digit is less than 10. \<close>
+corollary 
+  "\<forall>d \<in> set (digits10 n). d < 10" 
+  oops
+
+
+end
