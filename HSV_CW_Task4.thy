@@ -73,13 +73,8 @@ theorem counterexample: "digits10 (sum10 [1,0]) \<noteq> [1,0]"
 section \<open> Task 4: A divisibility theorem. \<close>
 
 
-theorem ABABAB_divisibility: "(sum10 [B,A,B,A,B,A]) mod 37 = 0"
-proof
-  have "(sum10 [B,A,B,A,B,A])mod 37 = (101010 * A + 10101 * B) mod 37" by simp
-  hence "(sum10 [B,A,B,A,B,A])mod 37 = (101010 * A) mod 37 + (10101 * B) mod 37" by auto
-  hence "(sum10 [B,A,B,A,B,A])mod 37 = 0" by auto
-  then show  "\<forall>A B. (sum10 [B,A,B,A,B,A])mod 37 = 0"
-qed
+theorem ABABAB_divisibility:" \<forall>A. \<forall>B. (sum10 [B,A,B,A,B,A]) mod 37 = 0"
+  by auto
 
 
 end
