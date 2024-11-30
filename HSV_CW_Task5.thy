@@ -155,12 +155,17 @@ text ‹ If the naive SAT solver returns no valuation, then none of the valuatio
 theorem naive_solve_correct_unsat:
   assumes "naive_solve q = None"
   shows "∀ρ ∈ set (mk_valuation_list (symbol_list q)). ¬ evaluate q ρ"
-proof
-  assume "naive_solve q = None"
-  then have "List.fold (until (evaluate q)) (mk_valuation_list (symbol_list q)) None = None" unfolding naive_solve_def
-    by simp
-  then have "∀ρ ∈ set (mk_valuation_list (symbol_list q)). ¬ evaluate q ρ" 
+proof -
+  from assms have "List.fold (until (evaluate q)) (mk_valuation_list (symbol_list q)) None = None"
+    by (simp add: naive_solve_def)
+  
+  (* Apply until_none lemma *)
+  then have "∀ρ ∈ set (mk_valuation_list (symbol_list q)). ¬ evaluate q ρ" using until_none naive_solve_def 
+    using split_list_first by fastforce
+  
+  thus ?thesis by simp
 qed
+
 
 
 end
